@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertiAI - Transformasi Foto Real Estate Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#FACC15',
+                            500: '#EAB308',
+                            600: '#CA8A04',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #f8fafc;
+        }
+
+        /* --- SLIDER STYLES (Dark & Gold Theme) --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            border-radius: 1.5rem; /* Lebih bulat */
+            box-shadow: 0 0 40px rgba(234, 179, 8, 0.1); /* Gold glow soft */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            user-select: none;
+            cursor: ew-resize;
+        }
+
+        @media (max-width: 768px) {
+            .slider-container {
+                height: 300px;
+            }
+        }
+
+        /* LAYER 1: AFTER (Hasil Bagus - Bawah) */
+        .img-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Ganti URL gambar After di sini */
+            background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        /* LAYER 2: BEFORE (Awal/Jelek - Atas) - WRAPPER */
+        .img-foreground-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            border-right: 2px solid #FACC15; /* Gold line separator */
+            box-shadow: 5px 0 25px rgba(0,0,0,0.8);
+            z-index: 20;
+            will-change: width;
+        }
+
+        /* LAYER 2: BEFORE (Gambar Isinya) */
+        .img-foreground-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            /* Ganti URL gambar Before di sini */
+            background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Slider Handle (Tombol Bulat) */
+        .slider-handle-button {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(15, 23, 42, 0.8); /* Dark glass */
+            border: 2px solid #FACC15; /* Gold border */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FACC15; /* Gold icon */
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+            z-index: 30;
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+        }
+
+        .slider-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 40;
+            opacity: 0;
+            cursor: ew-resize;
+        }
+
+        /* Glass Badges */
+        .badge {
+            position: absolute;
+            top: 30px;
+            padding: 8px 18px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #FACC15; /* Gold text */
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(250, 204, 21, 0.3); /* Gold border soft */
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        
+        .badge-after { right: 30px; z-index: 10; }
+        .badge-before { left: 30px; z-index: 30; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Animation Utils */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.05);
+        }
+    </style>
+</head>
+<body class="selection:bg-gold-500 selection:text-black">
+
+    <!-- Navbar (Glass Dark) -->
+    <nav class="fixed w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer">
+                    <!-- Mengganti huruf 'P' dengan ikon rumah (fa-home) -->
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-black font-bold text-xl shadow-[0_0_15px_rgba(234,179,8,0.4)] group-hover:scale-110 transition duration-300">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight text-white group-hover:text-gray-200 transition">
+                        Properti<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500">AI</span>
+                    </span>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                    <a href="#cara-kerja" class="hover:text-yellow-400 transition hover:scale-105">Cara Kerja</a>
+                    <a href="#fitur" class="hover:text-yellow-400 transition hover:scale-105">Fitur Premium</a>
+                    <a href="#testimoni" class="hover:text-yellow-400 transition hover:scale-105">Testimoni</a>
+                </div>
+
+                <!-- CTA Button telah dihapus -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-24 relative overflow-hidden">
+        <!-- Ambient Background Light -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                
+                <!-- Hero Text -->
+                <div class="space-y-8 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-4 py-1.5 text-xs font-bold text-yellow-400 uppercase tracking-widest">
+                        <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span>
+                        Revolusi Properti 2026
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                        Ubah Foto Properti Jadi Menarik dan<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-[0_0_10px_rgba(234,179,8,0.3)]"> Profesional</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-400 leading-relaxed max-w-lg mx-auto md:mx-0 border-l-2 border-yellow-500/30 pl-6">
+                        Dengan teknologi AI tercanggih untuk para Agen & Developer Properti. Ciptakan visual profesional dalam hitungan detik. Tanpa fotografer, tanpa ribet.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
+                        <a href="#harga" class="px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-bold rounded-2xl transition transform hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2">
+                            <span>Akses Sekarang</span>
+                        </a>
+                        <!-- UPDATED: href changed from #cara-kerja to #demo-propertiai -->
+                        <a href="#demo-propertiai" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-semibold text-white backdrop-blur-sm transition flex items-center justify-center gap-2 group">
+                            <i class="fas fa-play text-yellow-500 group-hover:scale-125 transition-transform"></i>
+                            <span>Demo Video</span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 justify-center md:justify-start pt-4 opacity-80">
+                        <div class="flex -space-x-3">
+                            <div class="w-10 h-10 rounded-full border-2 border-[#020617] bg-gray-700"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-[#020617] bg-gray-600"></div>
+                            <div class="w-10 h-10 rounded-full border-2 border-[#020617] bg-gray-500"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            <span class="text-white font-bold">1,200+</span> Agen Telah Bergabung
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Slider -->
+                <div class="relative group">
+                    <!-- Glass Frame -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-b from-yellow-500/20 to-transparent rounded-[1.6rem] blur opacity-50"></div>
+                    
+                    <div class="slider-container bg-slate-900" id="heroSlider">
+                        
+                        <!-- 1. AFTER (Background) -->
+                        <div class="img-background"></div>
+                        <span class="badge badge-after">
+                            <i class="fas fa-wand-magic-sparkles mr-2"></i> After
+                        </span>
+
+                        <!-- 2. BEFORE (Foreground Wrapper) -->
+                        <div class="img-foreground-wrapper">
+                            <!-- Inner Image -->
+                            <div class="img-foreground-inner" style="filter: grayscale(100%) brightness(50%);"></div>
+                            <span class="badge badge-before">
+                                <i class="fas fa-camera mr-2"></i> Before
+                            </span>
+                        </div>
+                        
+                        <!-- 3. Handle -->
+                        <div class="slider-handle-button" style="left: 50%;">
+                            <i class="fas fa-arrows-left-right text-xl"></i>
+                        </div>
+
+                        <!-- 4. Input -->
+                        <input type="range" min="0" max="100" value="50" class="slider-input">
+                    </div>
+
+                    <!-- Tech specs under slider -->
+                    <div class="grid grid-cols-3 gap-2 mt-6">
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <i class="fas fa-bolt text-yellow-400 mb-1"></i>
+                            <p class="text-xs text-gray-400 font-medium">Instant</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <i class="fas fa-cube text-yellow-400 mb-1"></i>
+                            <p class="text-xs text-gray-400 font-medium">3D Depth</p>
+                        </div>
+                        <div class="glass-card p-3 rounded-xl text-center">
+                            <i class="fas fa-crown text-yellow-400 mb-1"></i>
+                            <p class="text-xs text-gray-400 font-medium">High-Resolution</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="cara-kerja" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Workflow</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Simpel. Cepat. <span class="text-yellow-400">Elegan.</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 (Updated Style) -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:-translate-y-2 transition duration-500 border-yellow-500/20">
+                    <div class="absolute -inset-[1px] bg-gradient-to-b from-yellow-500/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-yellow-800 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-2xl text-white mb-6 shadow-lg shadow-yellow-900/40">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">1. Upload Foto</h3>
+                    <p class="text-gray-400 leading-relaxed">Unggah foto ruangan kosong, fasad rumah, unit belum jadi atau gambar gelap seadanya dari device apapun. Tanpa Menurunkan Kualitas foto.</p>
+                </div>
+
+                <!-- Step 2 (Original Style) -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:-translate-y-2 transition duration-500 border-yellow-500/20">
+                    <div class="absolute -inset-[1px] bg-gradient-to-b from-yellow-500/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-yellow-800 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-2xl text-white mb-6 shadow-lg shadow-yellow-900/40">
+                        <i class="fas fa-wand-magic-sparkles animate-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">2. AI Processing</h3>
+                    <p class="text-gray-400 leading-relaxed">Tidak perlu pengalaman desain sama sekali, Algoritma cerdas kami akan menganalisa gambar, merapikan/ganti warna, ubah suasana, objek pengganggu dihapus bahkan bisa mengisi ruangan dengan interior kelas profesional.</p>
+                </div>
+
+                <!-- Step 3 (Updated Style) -->
+                <div class="glass-card p-8 rounded-3xl relative group hover:-translate-y-2 transition duration-500 border-yellow-500/20">
+                    <div class="absolute -inset-[1px] bg-gradient-to-b from-yellow-500/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-600 to-yellow-800 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-2xl text-white mb-6 shadow-lg shadow-yellow-900/40">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">3. Export High-Resolution</h3>
+                    <p class="text-gray-400 leading-relaxed">Download hasil render resolusi tinggi. Tidak perlu menunggu lama atau revisi berulang. Foto langsung siap pakai untuk promosi di Instagram, Facebook, Tiktok, Whatsapp atau Marketplace.</p>
+                </div>
+            </div>
+
+            <!-- MOVED: VIDEO DEMO SECTION -->
+            <!-- UPDATED: Added id="demo-propertiai" and scroll-mt-28 for proper spacing -->
+            <div id="demo-propertiai" class="mt-20 max-w-4xl mx-auto relative z-10 scroll-mt-28">
+                <div class="text-center mb-8">
+                    <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Live Demo</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white">Lihat Keajaiban <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600">PropertiAI</span> Beraksi</h3>
+                </div>
+
+                <div class="relative group">
+                    <!-- Glow Effect (Yellow/Gold) -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-yellow-600 to-yellow-400 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    
+                    <!-- Container Video -->
+                    <div class="relative bg-slate-900 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl aspect-video">
+                        <iframe 
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/LXb3EKWsInQ" 
+                            title="PropertiAI Demo"
+                            frameborder="0" 
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features Highlight / Fitur Unggulan (NEW SECTION) -->
+    <section id="fitur" class="py-24 relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute right-0 top-1/4 w-[500px] h-[500px] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                
+                <!-- Left Column: Visual Grid -->
+                <div class="grid grid-cols-2 gap-4 relative">
+                    <div class="space-y-4 translate-y-8">
+                        <div class="glass-card p-2 rounded-2xl border-yellow-500/20 transform hover:scale-105 transition duration-500">
+                            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" class="rounded-xl w-full h-48 object-cover shadow-lg opacity-80 hover:opacity-100 transition" alt="Feature 1">
+                        </div>
+                        <div class="glass-card p-2 rounded-2xl border-yellow-500/20 transform hover:scale-105 transition duration-500">
+                            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80" class="rounded-xl w-full h-64 object-cover shadow-lg opacity-80 hover:opacity-100 transition" alt="Feature 2">
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="glass-card p-2 rounded-2xl border-yellow-500/20 transform hover:scale-105 transition duration-500">
+                            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=400&q=80" class="rounded-xl w-full h-64 object-cover shadow-lg opacity-80 hover:opacity-100 transition" alt="Feature 3">
+                        </div>
+                        <div class="glass-card p-2 rounded-2xl border-yellow-500/20 transform hover:scale-105 transition duration-500">
+                            <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=400&q=80" class="rounded-xl w-full h-48 object-cover shadow-lg opacity-80 hover:opacity-100 transition" alt="Feature 4">
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Element -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-yellow-500/20 blur-3xl rounded-full -z-10"></div>
+                </div>
+
+                <!-- Right Column: Text Content -->
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Fitur Premium</span>
+                        <h2 class="text-3xl md:text-5xl font-bold text-white leading-tight">
+                            Kenapa Top Agen <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600">Memilih PropertiAI?</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Feature Item 1 -->
+                        <div class="flex gap-6 group p-4 rounded-2xl hover:bg-white/5 transition duration-300">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-600/20 to-yellow-900/20 border border-yellow-500/30 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-black transition duration-300 text-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                                <i class="fas fa-infinity text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Akses Tanpa Batas</h4>
+                                <p class="text-gray-400 leading-relaxed text-sm">Generate ribuan foto properti tanpa pusing mikirin kuota atau kredit limit yang habis. Bebas eksplorasi gaya interior maupun eksterior.</p>
+                            </div>
+                        </div>
+
+                        <!-- Feature Item 2 -->
+                        <div class="flex gap-6 group p-4 rounded-2xl hover:bg-white/5 transition duration-300">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-600/20 to-yellow-900/20 border border-yellow-500/30 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-black transition duration-300 text-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                                <i class="fas fa-layer-group text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Smart Structure Lock™</h4>
+                                <p class="text-gray-400 leading-relaxed text-sm">Teknologi AI kami mengenali & mengunci element asli seperti dinding, lantai, dan jendela. Renovasi virtual dapat dilakukan tanpa mengubah fisik bangunan.</p>
+                            </div>
+                        </div>
+
+                        <!-- Feature Item 3 -->
+                        <div class="flex gap-6 group p-4 rounded-2xl hover:bg-white/5 transition duration-300">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-600/20 to-yellow-900/20 border border-yellow-500/30 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-black transition duration-300 text-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                                <i class="fas fa-coins text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-400 transition">Hemat Jutaan Rupiah</h4>
+                                <p class="text-gray-400 leading-relaxed text-sm">Pangkas biaya staging fisik dan fotografer profesional hingga 90%. Solusi visual properti paling efisien.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUSTED BY / CLIENT LOGOS MARQUEE (NEW SECTION) -->
+    <section class="py-16 border-t border-white/5 bg-black/40 relative overflow-hidden">
+        <!-- Title Center -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center mb-10">
+            <h3 class="text-xl md:text-2xl font-bold text-white">
+                Dipercaya oleh <span class="text-yellow-500">100+ Proyek Perumahan</span>
+            </h3>
+            <p class="text-sm text-gray-500 mt-2">Meningkatkan konversi penjualan dengan visual premium.</p>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="relative w-full overflow-hidden">
+            <!-- Fade Effect Gradients (Kiri & Kanan) -->
+            <div class="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#020617] to-transparent z-20 pointer-events-none"></div>
+            <div class="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#020617] to-transparent z-20 pointer-events-none"></div>
+
+            <!-- Moving Track -->
+            <!-- Note: Gunakan style inline untuk animasi marquee sederhana agar tidak perlu plugin tambahan -->
+            <div class="flex whitespace-nowrap" style="animation: marquee 30s linear infinite;">
+                
+                <!-- LOGO SET 1 (Dummy Icons) -->
+                <div class="flex items-center gap-16 mx-8">
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-building text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">GrandEstate</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-city text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">RoyalView</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-hotel text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">LuxeLiving</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-home text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">CitraLand</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-tree text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">GreenWood</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-landmark text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">Podomoro</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-monument text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">SentulCity</span>
+                    </div>
+                </div>
+
+                <!-- LOGO SET 2 (Duplikat agar looping seamless) -->
+                <div class="flex items-center gap-16 mx-8">
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-building text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">GrandEstate</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-city text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">RoyalView</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-hotel text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">LuxeLiving</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-home text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">CitraLand</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-tree text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">GreenWood</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-landmark text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">Podomoro</span>
+                    </div>
+                    <div class="flex items-center gap-3 opacity-40 hover:opacity-100 transition duration-300 grayscale hover:grayscale-0 cursor-pointer">
+                        <i class="fas fa-monument text-3xl text-yellow-500"></i>
+                        <span class="text-xl font-bold text-white">SentulCity</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Add Animation Keyframes directly in style -->
+        <style>
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+        </style>
+    </section>
+
+    <!-- NEW SECTION: CONTOH HASIL / EXAMPLE RESULT -->
+    <section id="contoh-hasil" class="py-24 relative overflow-hidden bg-slate-900/50">
+        <!-- Glow Effect -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Gallery</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Cukup Upload Foto <span class="text-yellow-400">Seadanya</span></h2>
+                <p class="text-gray-400 text-lg">Biarkan AI kami yang melakukan pekerjaan berat. Dari ruang kosong menjadi hunian impian dalam sekejap.</p>
+            </div>
+
+            <!-- GRID CONTAINER (2 COLUMNS) -->
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                
+                <!-- SLIDER 1 (KIRI - Living Room) -->
+                <div class="relative group">
+                    <!-- Glass Frame -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-b from-yellow-500/20 to-transparent rounded-[1.6rem] blur opacity-50 transition duration-500 group-hover:opacity-100"></div>
+                    
+                    <div class="slider-container bg-slate-900 h-[350px] sm:h-[400px]"> <!-- Tinggi disesuaikan agar proporsional -->
+                        
+                        <!-- 1. AFTER (Background) -->
+                        <div class="img-background"></div>
+                        <span class="badge badge-after">
+                            <i class="fas fa-wand-magic-sparkles mr-2"></i> After
+                        </span>
+
+                        <!-- 2. BEFORE (Foreground Wrapper) -->
+                        <div class="img-foreground-wrapper">
+                            <!-- PERBAIKAN: Filter INLINE untuk Demo -->
+                            <div class="img-foreground-inner" style="filter: grayscale(100%) brightness(50%);"></div>
+                            <span class="badge badge-before">
+                                <i class="fas fa-camera mr-2"></i> Before
+                            </span>
+                        </div>
+                        
+                        <!-- 3. Handle -->
+                        <div class="slider-handle-button" style="left: 50%;">
+                            <i class="fas fa-arrows-left-right text-xl"></i>
+                        </div>
+
+                        <!-- 4. Input -->
+                        <input type="range" min="0" max="100" value="50" class="slider-input">
+                    </div>
+                    
+                    <!-- Caption -->
+                    <div class="mt-5 text-center">
+                        <h3 class="text-white font-bold text-lg">Modern Living Room</h3>
+                        <p class="text-gray-500 text-sm">Virtual Staging & Lighting</p>
+                    </div>
+                </div>
+
+                <!-- SLIDER 2 (KANAN - Bedroom/Kitchen Example) -->
+                <div class="relative group">
+                    <!-- Glass Frame -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-b from-yellow-500/20 to-transparent rounded-[1.6rem] blur opacity-50 transition duration-500 group-hover:opacity-100"></div>
+                    
+                    <div class="slider-container bg-slate-900 h-[350px] sm:h-[400px]">
+                        
+                        <!-- 1. AFTER (Background) - Gambar Baru (Bedroom) -->
+                        <div class="img-background" style="background-image: url('https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');"></div>
+                        <span class="badge badge-after">
+                            <i class="fas fa-wand-magic-sparkles mr-2"></i> After
+                        </span>
+
+                        <!-- 2. BEFORE (Foreground Wrapper) -->
+                        <div class="img-foreground-wrapper">
+                            <!-- Inner Image - Gambar Baru (Bedroom) dengan filter -->
+                            <div class="img-foreground-inner" style="background-image: url('https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80'); filter: grayscale(100%) brightness(60%) sepia(20%);"></div>
+                            <span class="badge badge-before">
+                                <i class="fas fa-camera mr-2"></i> Before
+                            </span>
+                        </div>
+                        
+                        <!-- 3. Handle -->
+                        <div class="slider-handle-button" style="left: 50%;">
+                            <i class="fas fa-arrows-left-right text-xl"></i>
+                        </div>
+
+                        <!-- 4. Input -->
+                        <input type="range" min="0" max="100" value="50" class="slider-input">
+                    </div>
+
+                    <!-- Caption -->
+                    <div class="mt-5 text-center">
+                        <h3 class="text-white font-bold text-lg">Luxury Bedroom</h3>
+                        <p class="text-gray-500 text-sm">Interior Design AI</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: TESTIMONIALS -->
+    <section id="testimoni" class="py-24 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute right-0 bottom-0 w-[600px] h-[600px] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute left-0 top-1/4 w-[300px] h-[300px] bg-blue-900/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Social Proof</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Kata Para <span class="text-yellow-400">Top Agent</span></h2>
+                <p class="text-gray-400 text-lg">Mereka sudah membuktikan kenaikan closing rate hingga 300% dengan visual premium.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-card p-8 rounded-3xl relative hover:-translate-y-2 transition duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-14 h-14 rounded-full border-2 border-yellow-500/30 object-cover">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Andi Pratama</h4>
+                            <p class="text-yellow-500 text-xs font-bold uppercase tracking-wider">Ray White Agent</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-yellow-500 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed italic flex-grow">"Gila sih, modal 99rb doang ga sebanding komisi cair dari hasil closingan. Impact ke listing saya jadi gede banget. Klien jadi lebih banyak yang mau survey karena fotonya bagus. Balik modal berkali-kali lipat!"</p>
+                    <!-- UPDATED: Icon moved to left & Color changed to Blue -->
+                    <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-gray-500">
+                        <i class="fas fa-check-circle text-blue-500"></i>
+                        <span>Verified User</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 (Highlight) -->
+                <div class="glass-card p-8 rounded-3xl relative hover:-translate-y-2 transition duration-300 border-yellow-500/40 shadow-[0_0_30px_rgba(234,179,8,0.08)] flex flex-col h-full transform md:-translate-y-4">
+                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-xs font-extrabold px-4 py-1.5 rounded-full shadow-lg shadow-yellow-500/20">MOST HELPFUL</div>
+                    <div class="flex items-center gap-4 mb-6 mt-2">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-14 h-14 rounded-full border-2 border-yellow-500/30 object-cover">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Sarah Wijaya</h4>
+                            <p class="text-yellow-500 text-xs font-bold uppercase tracking-wider">Brighton Real Estate</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-yellow-500 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed italic flex-grow">"Dulu harus bayar jasa render 3D mahal dan nunggunya lama. Sekarang tinggal upload foto mentah dari HP, 10 detik jadi mewah. Sangat membantu closingan rumah second yang kondisinya kurang oke."</p>
+                    <!-- UPDATED: Icon moved to left & Color changed to Blue -->
+                    <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-gray-500">
+                        <i class="fas fa-check-circle text-blue-500"></i>
+                        <span>Verified User</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="glass-card p-8 rounded-3xl relative hover:-translate-y-2 transition duration-300 flex flex-col h-full">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User" class="w-14 h-14 rounded-full border-2 border-yellow-500/30 object-cover">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Budi Santoso</h4>
+                            <p class="text-yellow-500 text-xs font-bold uppercase tracking-wider">Developer Perumahan</p>
+                        </div>
+                    </div>
+                    <div class="mb-4 text-yellow-500 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed italic flex-grow">"Fitur virtual staging-nya juara. Rumah contoh belum jadi pun bisa saya jual karena visual interiornya sangat meyakinkan calon pembeli. Wajib punya buat developer!"</p>
+                    <!-- UPDATED: Icon moved to left & Color changed to Blue -->
+                    <div class="mt-6 pt-6 border-t border-white/5 flex items-center gap-2 text-xs text-gray-500">
+                        <i class="fas fa-check-circle text-blue-500"></i>
+                        <span>Verified User</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing (Lifetime Deal) -->
+    <section id="harga" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-yellow-500/5" style="clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%);"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white">Investasi Sekali, <br>Profit Selamanya</h2>
+            <p class="text-gray-400 text-lg mb-12 max-w-xl mx-auto">Model bisnis revolusioner. Tanpa langganan bulanan yang membebani cashflow Anda.</p>
+
+            <!-- Card Premium -->
+            <div class="relative max-w-lg mx-auto transform hover:scale-105 transition duration-500">
+                <!-- Border Gradient -->
+                <div class="absolute -inset-[2px] bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-600 rounded-[2.6rem] blur opacity-75"></div>
+                
+                <div class="relative bg-[#0F172A] rounded-[2.5rem] p-8 md:p-14 border border-white/10 shadow-2xl">
+                    <div class="absolute top-0 right-0 bg-gradient-to-r from-red-600 to-red-500 text-white text-[10px] md:text-xs font-bold px-4 py-2 md:px-6 md:py-3 rounded-bl-2xl rounded-tr-[2.3rem] uppercase tracking-wider shadow-lg">
+                        Limited Offer
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-yellow-500 mb-2 uppercase tracking-[0.2em]">Lifetime License</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-8">
+                        <span class="text-xl md:text-2xl text-gray-500 line-through font-medium">Rp 329k</span>
+                        <span class="text-5xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg">Rp 99k</span>
+                    </div>
+                    
+                    <div class="space-y-5 mb-8 text-left pl-2">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
+                                <i class="fas fa-infinity text-yellow-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Unlimited Render Image</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
+                                <i class="fas fa-couch text-yellow-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Auto Virtual Staging</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
+                                <i class="fas fa-lightbulb text-yellow-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Smart Lighting Enhance</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
+                                <i class="fas fa-check text-yellow-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Harga Jauh Di Bawah Nominal Komisi Anda</span>
+                        </div>
+                        <!-- Benefit Baru Ditambahkan -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
+                                <i class="fas fa-wallet text-yellow-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Cukup Sekali Beli, Tanpa Langganan</span>
+                        </div>
+                    </div>
+
+                    <!-- NEW: BONUS SECTION (Refined with Cards) -->
+                    <div class="mb-10">
+                        <p class="text-yellow-500 font-bold text-xs uppercase tracking-widest mb-4 flex items-center justify-center gap-2">
+                            <i class="fas fa-gift animate-bounce"></i> Bonus Spesial Hari Ini
+                        </p>
+                        
+                        <div class="space-y-3">
+                            <!-- Bonus Card 1 -->
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-yellow-500/10 hover:border-yellow-500/30 transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0 text-yellow-400">
+                                    <i class="fas fa-play-circle text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h5 class="text-white font-bold text-sm">Video Tutorial</h5>
+                                    <p class="text-gray-400 text-xs">Panduan lengkap cara pakai.</p>
+                                </div>
+                            </div>
+
+                            <!-- Bonus Card 2 -->
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-yellow-500/10 hover:border-yellow-500/30 transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0 text-yellow-400">
+                                    <i class="fas fa-users text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h5 class="text-white font-bold text-sm">Grup Komunitas</h5>
+                                    <p class="text-gray-400 text-xs">Diskusi bareng agency lain.</p>
+                                </div>
+                            </div>
+
+                            <!-- Bonus Card 3 -->
+                            <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-yellow-500/10 hover:border-yellow-500/30 transition duration-300">
+                                <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center shrink-0 text-yellow-400">
+                                    <i class="fas fa-book text-lg"></i>
+                                </div>
+                                <div class="text-left">
+                                    <h5 class="text-white font-bold text-sm">E-book Premium</h5>
+                                    <p class="text-gray-400 text-xs">101 Tips Foto Properti.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-black font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(234,179,8,0.4)] transition transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(234,179,8,0.6)]">
+                        Ambil Akses Sekarang
+                    </button>
+                    <p class="text-xs text-gray-500 mt-6 flex justify-center items-center gap-2">
+                        <i class="fas fa-shield-alt"></i> Garansi uang kembali 7 hari
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: SPECIAL BUNDLING (Image + Voice) -->
+    <section id="bundling" class="py-24 relative overflow-hidden bg-gradient-to-b from-[#020617] to-slate-900">
+        <!-- Decoration Pattern -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <!-- Ambient Glow -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-yellow-500/5 via-blue-500/5 to-cyan-500/5 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <!-- Badge -->
+            <div class="inline-block mb-8">
+                <span class="bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-xs font-bold px-6 py-2 rounded-full uppercase tracking-widest shadow-lg shadow-blue-500/30 animate-pulse border border-white/20">
+                    <i class="fas fa-fire mr-2"></i> Limited Time Offer
+                </span>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Paket Komplit <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-green-400 to-blue-400">Konten Creator Properti</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+                Kombinasi maut untuk listing Anda: Visual Properti Mewah + Narasi Suara Profesional dalam satu paket hemat.
+            </p>
+
+            <!-- Bundle Card Container -->
+            <div class="relative bg-slate-800/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden group hover:border-white/20 transition duration-500">
+                
+                <!-- Glowing Animated Border -->
+                <div class="absolute -inset-[1px] bg-gradient-to-r from-yellow-500 via-blue-500 to-cyan-500 rounded-[2.5rem] opacity-20 group-hover:opacity-50 transition duration-1000 blur-md"></div>
+                
+                <div class="relative z-10">
+                    <!-- The Bundle Visual -->
+                    <div class="flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-8 mb-12">
+                        
+                        <!-- Product 1: PropertiAI -->
+                        <div class="flex-1 bg-black/20 rounded-3xl p-6 border border-yellow-500/20 transform hover:scale-105 transition duration-300">
+                            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center text-3xl text-black shadow-[0_0_30px_rgba(234,179,8,0.3)] mb-4">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h3 class="text-white font-bold text-xl mb-1">PropertiAI Image</h3>
+                            <p class="text-yellow-500 text-sm font-semibold mb-4">Visual Enhancement</p>
+                            <!-- UPDATED: text-gray-400 changed to text-white -->
+                            <ul class="text-left text-white text-sm space-y-2 mb-4 px-4">
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-yellow-500 mt-1"></i> Virtual Staging Otomatis</li>
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-yellow-500 mt-1"></i> Perbaikan Pencahayaan</li>
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-yellow-500 mt-1"></i> Hapus Objek Mengganggu</li>
+                            </ul>
+                            <div class="mt-auto pt-4 border-t border-white/10">
+                                <!-- UPDATED: 'Harga Normal' changed to 'Harga Paket Single' -->
+                                <p class="text-gray-500 text-xs">Harga Paket Single</p>
+                                <p class="text-white font-bold decoration-red-500/50 line-through">Rp 99.000</p>
+                            </div>
+                        </div>
+
+                        <!-- Plus Sign -->
+                        <div class="flex flex-col items-center justify-center py-4 md:py-0">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-500 to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-lg animate-pulse">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+
+                        <!-- Product 2: Genie Voice Studio Pro (UPDATED STYLE) -->
+                        <div class="flex-1 bg-black/20 rounded-3xl p-6 border border-blue-500/20 transform hover:scale-105 transition duration-300">
+                            <!-- Icon Container Updated with User's Style -->
+                            <!-- Note: Size adjusted to w-20 h-20 to match the neighbor card -->
+                            <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 ring-1 ring-white/10 text-3xl text-white mb-4">
+                                <!-- Mengganti ikon Robot menjadi Mikrofon -->
+                                <i class="fas fa-microphone-lines"></i>
+                            </div>
+                            
+                            <h3 class="text-white font-bold text-xl mb-1">Genie Voice Studio</h3>
+                            <!-- Text color changed to Blue/Cyan -->
+                            <p class="text-cyan-400 text-sm font-semibold mb-4">AI Voice Over & Script</p>
+                            <!-- UPDATED: text-gray-400 changed to text-white -->
+                            <ul class="text-left text-white text-sm space-y-2 mb-4 px-4">
+                                <!-- Checkmarks changed to Blue/Cyan -->
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-cyan-500 mt-1"></i> Suara 100% Natural Orang Indonesia</li>
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-cyan-500 mt-1"></i> Bisa Ubah Foto atau Teks jadi Suara</li>
+                                <li class="flex items-start gap-2"><i class="fas fa-check text-cyan-500 mt-1"></i> Dibantu AI Scripwriter untuk Listing Iklan</li>
+                            </ul>
+                            <div class="mt-auto pt-4 border-t border-white/10">
+                                <!-- UPDATED: 'Harga Normal' changed to 'Harga Paket Single' -->
+                                <p class="text-gray-500 text-xs">Harga Paket Single</p>
+                                <p class="text-white font-bold decoration-red-500/50 line-through">Rp 99.000</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Pricing & CTA -->
+                    <div class="pt-8 border-t border-white/10 max-w-2xl mx-auto">
+                        <div class="flex flex-col items-center">
+                            <div class="flex items-center gap-4 mb-4 bg-white/5 px-6 py-2 rounded-full border border-white/10 backdrop-blur-sm">
+                                <span class="text-gray-400 text-lg line-through font-medium">Total Rp 198.000</span>
+                                <span class="text-green-400 text-base font-bold tracking-wide animate-pulse">HEMAT 30%</span>
+                            </div>
+                            
+                            <div class="flex items-baseline gap-2 mb-8">
+                                <span class="text-2xl text-gray-400 font-bold">Hanya</span>
+                                <span class="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-yellow-200 to-blue-500 tracking-tight drop-shadow-xl">
+                                    139K
+                                </span>
+                            </div>
+                            
+                            <button class="w-full md:w-auto px-16 py-6 bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-600 hover:from-purple-500 hover:to-yellow-500 text-white font-bold rounded-2xl text-xl shadow-[0_0_40px_rgba(192,38,211,0.5)] transition transform hover:-translate-y-1 flex items-center justify-center gap-3 group relative overflow-hidden">
+                                <span class="absolute inset-0 bg-white/20 translate-x-[-100%] skew-x-12 group-hover:translate-x-[100%] transition duration-1000"></span>
+                                <span>Ambil Paket Bundling</span>
+                                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                            
+                            <!-- UPDATED: Mengubah text-gray-500 menjadi text-white -->
+                            <p class="text-white text-sm mt-6 flex items-center gap-6 justify-center">
+                                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Powered by Google Gemini</span>
+                                <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Sekali Bayar (Lifetime)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: GENIE VOICE VIDEO DEMO SECTION (SHORTS FORMAT) - UPDATED BLUE THEME -->
+            <div class="mt-24 max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-12">
+                    <span class="text-blue-400 font-bold tracking-widest uppercase text-xs mb-2 block">Voice Samples</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white">Contoh Hasil <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Genie Voice</span></h3>
+                    <p class="text-gray-400 mt-2 text-sm">Dengarkan variasi suara AI yang natural dalam format konten kekinian (9:16).</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <!-- Video Demo 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative group w-full max-w-[300px]">
+                            <!-- Glow Effect Blue -->
+                            <div class="absolute -inset-1 bg-gradient-to-tr from-blue-600 to-cyan-600 rounded-[2rem] blur opacity-20 group-hover:opacity-50 transition duration-1000"></div>
+                            
+                            <!-- Video Container (9:16 Aspect Ratio) -->
+                            <div class="relative bg-slate-900 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl aspect-[9/16]">
+                                <iframe 
+                                    class="w-full h-full"
+                                    src="https://www.youtube.com/embed/LXb3EKWsInQ" 
+                                    title="Demo Suara Iklan"
+                                    frameborder="0" 
+                                    allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <p class="text-blue-300 font-semibold mt-4 text-sm"><i class="fas fa-ad mr-2"></i>Suara Iklan Hard Selling</p>
+                    </div>
+
+                    <!-- Video Demo 2 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative group w-full max-w-[300px]">
+                            <!-- Glow Effect Cyan -->
+                            <div class="absolute -inset-1 bg-gradient-to-t from-cyan-500 to-blue-500 rounded-[2rem] blur opacity-20 group-hover:opacity-50 transition duration-1000"></div>
+                            
+                            <!-- Video Container -->
+                            <div class="relative bg-slate-900 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl aspect-[9/16]">
+                                <iframe 
+                                    class="w-full h-full"
+                                    src="https://www.youtube.com/embed/LXb3EKWsInQ" 
+                                    title="Demo Suara House Tour"
+                                    frameborder="0" 
+                                    allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <p class="text-cyan-300 font-semibold mt-4 text-sm"><i class="fas fa-home mr-2"></i>Narasi House Tour (Soft)</p>
+                    </div>
+
+                    <!-- Video Demo 3 -->
+                    <div class="flex flex-col items-center">
+                        <div class="relative group w-full max-w-[300px]">
+                            <!-- Glow Effect Indigo/Blue -->
+                            <div class="absolute -inset-1 bg-gradient-to-tl from-blue-600 to-indigo-500 rounded-[2rem] blur opacity-20 group-hover:opacity-50 transition duration-1000"></div>
+                            
+                            <!-- Video Container -->
+                            <div class="relative bg-slate-900 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl aspect-[9/16]">
+                                <iframe 
+                                    class="w-full h-full"
+                                    src="https://www.youtube.com/embed/LXb3EKWsInQ" 
+                                    title="Demo Suara Podcast"
+                                    frameborder="0" 
+                                    allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <p class="text-indigo-300 font-semibold mt-4 text-sm"><i class="fas fa-podcast mr-2"></i>Gaya Podcast Santai</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEW SECTION: GENIE VOICE STUDIO SINGLE PRICING -->
+    <section id="genie-single" class="py-24 relative overflow-hidden bg-[#020617]">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-blue-600/5" style="clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);"></div>
+        <div class="absolute left-0 bottom-0 w-[400px] h-[400px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Hanya Butuh <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Tools Suara?</span></h2>
+            <p class="text-gray-400 text-lg mb-12 max-w-xl mx-auto">Kami sediakan opsi khusus bagi Anda yang ingin fokus membuat Voice Over berkualitas tinggi.</p>
+
+            <!-- Card Premium Genie -->
+            <div class="relative max-w-lg mx-auto transform hover:scale-105 transition duration-500">
+                <!-- Border Gradient Blue/Cyan/Purple -->
+                <div class="absolute -inset-[2px] bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-600 rounded-[2.6rem] blur opacity-75"></div>
+                
+                <div class="relative bg-[#0F172A] rounded-[2.5rem] p-8 md:p-14 border border-white/10 shadow-2xl">
+                    <div class="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-[10px] md:text-xs font-bold px-4 py-2 md:px-6 md:py-3 rounded-bl-2xl rounded-tr-[2.3rem] uppercase tracking-wider shadow-lg">
+                        Limited Offer
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-cyan-400 mb-2 uppercase tracking-[0.2em]">Genie Voice License</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-8">
+                        <span class="text-xl md:text-2xl text-gray-500 line-through font-medium">Rp 299k</span>
+                        <span class="text-5xl md:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg">Rp 99k</span>
+                    </div>
+                    
+                    <div class="space-y-5 mb-10 text-left pl-2">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
+                                <i class="fas fa-infinity text-blue-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Unlimited Text-to-Speech</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
+                                <i class="fas fa-robot text-blue-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">100+ AI Voice Characters</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
+                                <i class="fas fa-magic text-blue-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Image-to-Audio Generator</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
+                                <i class="fas fa-check text-blue-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Commercial License</span>
+                        </div>
+                        <!-- Benefit Baru Ditambahkan -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 border border-blue-500/20">
+                                <i class="fas fa-wallet text-blue-400 text-sm"></i>
+                            </div>
+                            <span class="text-gray-300 font-medium">Cukup Sekali Beli, Tanpa Langganan</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full py-5 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 text-white font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(59,130,246,0.4)] transition transform hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(59,130,246,0.6)]">
+                        Ambil Genie Voice Sekarang
+                    </button>
+                    <p class="text-xs text-gray-500 mt-6 flex justify-center items-center gap-2">
+                        <i class="fas fa-shield-alt"></i> Garansi uang kembali 7 hari
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: FAQ -->
+    <section id="faq" class="py-24 relative overflow-hidden bg-slate-900/30">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-yellow-500 font-bold tracking-widest uppercase text-xs mb-2 block">Support</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Pertanyaan Umum</h2>
+                <p class="text-gray-400">Jawaban untuk pertanyaan yang sering diajukan oleh pengguna kami.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Apakah benar bayar sekali untuk selamanya?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Betul! Kami menggunakan model "Lifetime Deal" untuk promo peluncuran ini. Anda hanya perlu membayar Rp 99.000 satu kali di awal (untuk promo paket single), Rp 139.000 (untuk promo paket bundling) satu kali di awal dan akun Anda akan aktif selamanya tanpa biaya bulanan atau tahunan tersembunyi.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Apakah bentuk fisik rumah akan berubah?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Tidak. Algoritma AI kami dilengkapi fitur <i>Structure Lock</i> yang menjamin bentuk dinding, jendela, dan pintu asli tetap sama. AI hanya mengisi ruangan kosong dengan furnitur (Virtual Staging) atau mempercantik pencahayaan agar lebih menjual tanpa mengubah struktur bangunan.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Apakah bisa digunakan di HP?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Sangat bisa! PropertiAI dan Genie Voice Studio adalah platform berbasis web. Anda bisa mengaksesnya langsung melalui browser (Chrome, Safari, dll) di Smartphone Android maupun iPhone tanpa perlu menginstal aplikasi berat.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 4 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Bagaimana cara mendapatkan aksesnya?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Cukup klik tombol "Ambil Akses Sekarang" di atas jika kamu hanya ingin beli paket single Properti AI. Atau klik tombol "Ambil Genie Voice Sekarang" di atas jika kamu hanya ingin beli paket single Genie Voice Studio, lalu isi formulir pendaftaran singkat, dan lakukan pembayaran. Anda akan menerima Email link akses aktif secara otomatis dalam hitungan detik dan Anda bisa langsung mulai mengedit foto atau membuat voice over.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 5 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Bagaimana dengan akses paket bundling?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Cukup klik tombol "Ambil Paket Bundling" di atas, lalu isi formulir pendaftaran singkat, dan lakukan pembayaran. Anda akan menerima Email berupa link akses aktif kedua tools dalam paket bundling tersebut secara otomatis dalam hitungan detik dan Anda bisa langsung mulai mengedit foto atau membuat voice over.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 6 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Apakah Dapat Tutorial Penggunaannya?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Ya tentu! Anda juga akan mendapatkan panduan video tutorial yang mudah dipelajari dan bisa langsung dipraktekan, agar Anda tidak bingung cara menggunakan tools-nya.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 7 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Ribet Gak Cara Menggunakan Tools-nya?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Tentu tidak! Pemula gaptek sekalipun bisa langsung praktek, Step by step panduannya ada di video tutorial yang mudah Anda pahami.
+                    </div>
+                </details>
+
+                <!-- FAQ Item 8 -->
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Apakah Ada Garansi?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Tentu saja ada! Tools kami bergaransi uang kembali 7 hari jika tools tidak berfungsi sesuai benefit yang kami tawarkan. Kelancaran Terjamin oleh environtment AI milik Google Gemini.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-xs text-gray-600">
+                &copy; 2026 PropertiAI Om Ger | Ai-Labs Inc. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Slider JS (Modular Logic) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logic modular untuk menangani semua slider dengan class .slider-container
+            const sliders = document.querySelectorAll('.slider-container');
+
+            sliders.forEach(sliderContainer => {
+                const sliderInput = sliderContainer.querySelector('.slider-input');
+                const foregroundWrapper = sliderContainer.querySelector('.img-foreground-wrapper');
+                const foregroundImage = sliderContainer.querySelector('.img-foreground-inner');
+                const sliderHandle = sliderContainer.querySelector('.slider-handle-button');
+
+                if (!sliderInput || !foregroundWrapper || !foregroundImage || !sliderHandle) return;
+
+                function updateSlider() {
+                    const sliderValue = sliderInput.value;
+                    foregroundWrapper.style.width = `${sliderValue}%`;
+                    sliderHandle.style.left = `${sliderValue}%`;
+                }
+
+                function syncImageWidth() {
+                    const totalWidth = sliderContainer.getBoundingClientRect().width;
+                    foregroundImage.style.width = `${totalWidth}px`;
+                }
+
+                // Event Listeners
+                sliderInput.addEventListener('input', updateSlider);
+                
+                // Observer untuk resize
+                const resizeObserver = new ResizeObserver(() => { syncImageWidth(); });
+                resizeObserver.observe(sliderContainer);
+                
+                // Init
+                syncImageWidth();
+                updateSlider();
+            });
+            
+            // Fallback Global Window Resize
+            window.addEventListener('resize', () => {
+                sliders.forEach(sliderContainer => {
+                    const img = sliderContainer.querySelector('.img-foreground-inner');
+                    if (img) img.style.width = `${sliderContainer.getBoundingClientRect().width}px`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
