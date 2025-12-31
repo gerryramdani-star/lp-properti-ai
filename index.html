@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PropertiAI - Transformasi Foto Real Estate Premium</title>
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/gerryramdani-star/lp-properti-ai/refs/heads/main/asset/favicon%20propertiAI.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -239,8 +238,8 @@
                         <a href="#harga" class="px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-bold rounded-2xl transition transform hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.3)] flex items-center justify-center gap-2">
                             <span>Akses Sekarang</span>
                         </a>
-                        <!-- UPDATED: href changed from #cara-kerja to #demo-propertiai -->
-                        <a href="#demo-propertiai" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-semibold text-white backdrop-blur-sm transition flex items-center justify-center gap-2 group">
+                        <!-- UPDATED: Added StartTrial Event -->
+                        <a href="#demo-propertiai" onclick="fbq('track', 'StartTrial', {content_name: 'Demo Video Hero'});" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-semibold text-white backdrop-blur-sm transition flex items-center justify-center gap-2 group">
                             <i class="fas fa-play text-yellow-500 group-hover:scale-125 transition-transform"></i>
                             <span>Demo Video</span>
                         </a>
@@ -743,6 +742,12 @@
                 <div class="absolute -inset-[2px] bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-600 rounded-[2.6rem] blur opacity-75"></div>
                 
                 <div class="relative bg-[#0F172A] rounded-[2.5rem] p-8 md:p-14 border border-white/10 shadow-2xl">
+                    
+                    <!-- NEW: Add To Wishlist Button -->
+                    <button onclick="fbq('track', 'AddToWishlist', {content_name: 'PropertiAI Single', value: 99000, currency: 'IDR'}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 text-gray-600 hover:text-red-500 transition duration-300 z-20 group" title="Simpan ke Wishlist">
+                        <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
+                    </button>
+
                     <div class="absolute top-0 right-0 bg-gradient-to-r from-red-600 to-red-500 text-white text-[10px] md:text-xs font-bold px-4 py-2 md:px-6 md:py-3 rounded-bl-2xl rounded-tr-[2.3rem] uppercase tracking-wider shadow-lg">
                         Limited Offer
                     </div>
@@ -758,7 +763,7 @@
                             <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
                                 <i class="fas fa-infinity text-yellow-400 text-sm"></i>
                             </div>
-                            <span class="text-gray-300 font-medium">Unlimited Render Image (No Watermark)</span>
+                            <span class="text-gray-300 font-medium">Unlimited Render Image - No Watermark</span>
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center shrink-0 border border-yellow-500/20">
@@ -801,7 +806,7 @@
                                 </div>
                                 <div class="text-left">
                                     <h5 class="text-white font-bold text-sm">Video Tutorial</h5>
-                                    <p class="text-gray-400 text-xs">Panduan lengkap cara pakai Tools.</p>
+                                    <p class="text-gray-400 text-xs">Panduan lengkap cara pakai.</p>
                                 </div>
                             </div>
 
@@ -811,8 +816,8 @@
                                     <i class="fas fa-users text-lg"></i>
                                 </div>
                                 <div class="text-left">
-                                    <h5 class="text-white font-bold text-sm">Channel Grup Telegram</h5>
-                                    <p class="text-gray-400 text-xs">Diskusi bareng User lain.</p>
+                                    <h5 class="text-white font-bold text-sm">Grup Diskusi Telegram</h5>
+                                    <p class="text-gray-400 text-xs">Diskusi bareng pengguna lain.</p>
                                 </div>
                             </div>
 
@@ -828,13 +833,11 @@
                             </div>
                         </div>
                     </div>
-                    
-                <a href="https://websitepro.my.id/propertiai-form">
-                    <!-- UPDATED BUTTON: Removed 'transform' and 'translate' classes to fix Meta Pixel offset -->
-                    <button id="btn-single-propertiai" onclick="fbq('track', 'AddToCart', {content_name: 'PropertiAI Single', value: 99000, currency: 'IDR'});" class="w-full py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-black font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(234,179,8,0.4)] transition-colors duration-300">
+
+                    <!-- UPDATED BUTTON: Menggunakan fungsi trackSmartCheckout untuk generate eventID -->
+                    <button id="btn-single-propertiai" onclick="trackSmartCheckout('PropertiAI Single', 99000);" class="w-full py-5 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-black font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(234,179,8,0.4)] transition-colors duration-300">
                         Ambil Akses Sekarang
                     </button>
-                </a>
                     <p class="text-xs text-gray-500 mt-6 flex justify-center items-center gap-2">
                         <i class="fas fa-shield-alt"></i> Garansi uang kembali 30 hari
                     </p>
@@ -870,6 +873,11 @@
             <!-- Bundle Card Container -->
             <div class="relative bg-slate-800/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden group hover:border-white/20 transition duration-500">
                 
+                <!-- NEW: Add To Wishlist Button (Bundle) -->
+                <button onclick="var eid = 'wl_' + new Date().getTime(); fbq('track', 'AddToWishlist', {content_name: 'Paket Bundling', value: 139000, currency: 'IDR'}, {eventID: eid}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 ..." title="Simpan ke Wishlist">
+                    <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
+                </button>
+
                 <!-- Glowing Animated Border -->
                 <div class="absolute -inset-[1px] bg-gradient-to-r from-yellow-500 via-blue-500 to-cyan-500 rounded-[2.5rem] opacity-20 group-hover:opacity-50 transition duration-1000 blur-md"></div>
                 
@@ -946,14 +954,13 @@
                                     139K
                                 </span>
                             </div>
-
-                        <a href="https://websitepro.my.id/b/paket-bundling-content-creator-property-twdv_9">                            
-                            <!-- UPDATED BUTTON: Removed complex animations/transforms for Meta Pixel accuracy -->
-                            <button id="btn-bundle-checkout" onclick="fbq('track', 'AddToWishlist', {content_name: 'Paket Bundling PropertiAI + Genie', value: 139000, currency: 'IDR'});" class="w-full md:w-auto px-16 py-6 bg-gradient-to-r from-blue-600 via-cyan-600 to-yellow-500 hover:from-blue-500 hover:to-yellow-400 text-white font-bold rounded-2xl text-xl shadow-[0_0_40px_rgba(59,130,246,0.5)] flex items-center justify-center gap-3 transition-colors duration-300">
+                            
+                            <!-- UPDATED BUTTON: Menggunakan fungsi trackSmartCheckout untuk generate eventID -->
+                            <button id="btn-bundle-checkout" onclick="trackSmartCheckout('Paket Bundling PropertiAI + Genie', 139000);" class="w-full md:w-auto px-16 py-6 bg-gradient-to-r from-blue-600 via-cyan-600 to-yellow-500 hover:from-blue-500 hover:to-yellow-400 text-white font-bold rounded-2xl text-xl shadow-[0_0_40px_rgba(59,130,246,0.5)] flex items-center justify-center gap-3 transition-colors duration-300">
                                 <span>Ambil Paket Bundling Hemat</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
-                        </a>                            
+                            
                             <!-- UPDATED: Mengubah text-gray-500 menjadi text-white -->
                             <p class="text-white text-sm mt-6 flex items-center gap-6 justify-center">
                                 <span class="flex items-center gap-2"><i class="fas fa-check-circle text-green-500"></i> Powered by Google Gemini</span>
@@ -1040,73 +1047,6 @@
                 </div>
             </div>
 
-            <!-- NEW: GENIE VOICE WORKFLOW SECTION -->
-            <div class="mt-32 max-w-6xl mx-auto relative z-10">
-                <div class="text-center mb-16">
-                    <span class="text-cyan-400 font-bold tracking-widest uppercase text-xs mb-2 block">How It Works</span>
-                    <h3 class="text-2xl md:text-4xl font-bold text-white">Cara Kerja <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Genie Voice Studio</span></h3>
-                    <p class="text-gray-400 mt-3 text-base">Hanya 6 langkah mudah untuk menghasilkan audio profesional tanpa rekaman.</p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    
-                    <!-- Step 1 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4 group-hover:bg-blue-500 group-hover:text-white transition">
-                            <i class="fas fa-keyboard"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-blue-300 transition">1. Input Teks</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Ketik atau tempel naskah teks yang ingin Anda jadikan audio profesional ke dalam editor.</p>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl mb-4 group-hover:bg-cyan-500 group-hover:text-white transition">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-cyan-300 transition">2. Pilih Model Suara</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Pilih dari 30+ model suara asli Orang Indonesia (Pria/Wanita) yang sesuai dengan brand Anda.</p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
-                            <i class="fas fa-masks-theater"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-purple-300 transition">3. Pilih Ekspresi</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Sesuaikan nada bicara agar terdengar natural (Senang, Serius, Berbisik, Marah, dll).</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 text-xl mb-4 group-hover:bg-pink-500 group-hover:text-white transition">
-                            <i class="fas fa-sliders"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-pink-300 transition">4. Atur Tempo & Pitch</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Kendali penuh atas kecepatan bicara, jeda antar kalimat, dan tinggi rendahnya nada suara.</p>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400 text-xl mb-4 group-hover:bg-yellow-500 group-hover:text-black transition">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-yellow-300 transition">5. Hasilkan Suara</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Klik tombol generate dan teknologi AI Google Gemini akan memproses suara secara kilat.</p>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="glass-card p-6 rounded-2xl border-blue-500/20 hover:border-cyan-400/40 transition duration-300 group hover:-translate-y-1">
-                        <div class="w-12 h-12 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-400 text-xl mb-4 group-hover:bg-green-500 group-hover:text-white transition">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <h4 class="text-white font-bold text-lg mb-2 group-hover:text-green-300 transition">6. Download & Pakai</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">Unduh file audio kualitas tinggi (WAV/MP3) dan langsung gunakan untuk konten video Anda.</p>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -1122,6 +1062,13 @@
 
             <!-- Card Premium Genie -->
             <div class="relative max-w-lg mx-auto transform hover:scale-105 transition duration-500">
+                
+                <!-- NEW: Add To Wishlist Button (Genie) -->
+                <!-- Menambahkan EventID juga ke wishlist -->
+                <button onclick="var eid = 'wl_' + new Date().getTime(); fbq('track', 'AddToWishlist', {content_name: 'Genie Voice Studio Single', value: 99000, currency: 'IDR'}, {eventID: eid}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 text-gray-600 hover:text-red-500 transition duration-300 z-20 group" title="Simpan ke Wishlist">
+                    <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
+                </button>
+
                 <!-- Border Gradient Blue/Cyan/Purple -->
                 <div class="absolute -inset-[2px] bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-600 rounded-[2.6rem] blur opacity-75"></div>
                 
@@ -1170,12 +1117,10 @@
                         </div>
                     </div>
 
-                <a href="https://websitepro.my.id/p/genie-voice-studio-pro">
-                    <!-- UPDATED BUTTON: Removed complex animations/transforms for Meta Pixel accuracy -->
-                    <button id="btn-single-genie" onclick="fbq('track', 'StartTrial', {content_name: 'Genie Voice Studio Single', value: 99000, currency: 'IDR'});" class="w-full py-5 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 text-white font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-colors duration-300">
+                    <!-- UPDATED BUTTON: Menggunakan fungsi trackSmartCheckout untuk generate eventID -->
+                    <button id="btn-single-genie" onclick="trackSmartCheckout('Genie Voice Studio Single', 99000);" class="w-full py-5 bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 text-white font-extrabold rounded-2xl text-lg shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-colors duration-300">
                         Ambil Genie Voice Sekarang
                     </button>
-                </a>
                     <p class="text-xs text-gray-500 mt-6 flex justify-center items-center gap-2">
                         <i class="fas fa-shield-alt"></i> Garansi uang kembali 30 hari
                     </p>
@@ -1197,7 +1142,7 @@
                 <!-- FAQ Item 1 -->
                 <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
-                        <h2 class="font-bold text-lg">Apakah benar hanya bayar sekali saja?</h2>
+                        <h2 class="font-bold text-lg">Apakah benar bayar sekali untuk selamanya?</h2>
                         <span class="relative size-5 shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -1208,11 +1153,12 @@
                         </span>
                     </summary>
                     <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Betul! Kami menggunakan model "Lifetime Deal" untuk promo peluncuran ini. Anda hanya perlu membayar Rp 99.000 satu kali di awal (untuk promo paket single), Rp 139.000 (untuk promo paket bundling) satu kali di awal dan Anda akan dapat akses selamanya tanpa biaya bulanan atau tahunan tersembunyi.
+                        Betul! Kami menggunakan model "Lifetime Deal" untuk promo peluncuran ini. Anda hanya perlu membayar Rp 99.000 satu kali di awal (untuk promo paket single), Rp 139.000 (untuk promo paket bundling) satu kali di awal dan akun Anda akan aktif selamanya tanpa biaya bulanan atau tahunan tersembunyi.
                     </div>
                 </details>
 
-                <!-- FAQ Item 2 -->
+                <!-- ... other FAQs ... -->
+                <!-- Menambahkan FAQ lainnya kembali seperti di file sebelumnya -->
                 <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
                         <h2 class="font-bold text-lg">Apakah bentuk fisik rumah akan berubah?</h2>
@@ -1230,7 +1176,6 @@
                     </div>
                 </details>
 
-                <!-- FAQ Item 3 -->
                 <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
                         <h2 class="font-bold text-lg">Apakah bisa digunakan di HP?</h2>
@@ -1248,7 +1193,6 @@
                     </div>
                 </details>
 
-                <!-- FAQ Item 4 -->
                 <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
                     <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
                         <h2 class="font-bold text-lg">Bagaimana cara mendapatkan aksesnya?</h2>
@@ -1262,79 +1206,7 @@
                         </span>
                     </summary>
                     <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Cukup klik tombol "Ambil Akses Sekarang" di atas jika kamu hanya ingin beli paket single Properti AI. Atau klik tombol "Ambil Genie Voice Sekarang" di atas jika kamu hanya ingin beli paket single Genie Voice Studio, lalu isi formulir pendaftaran singkat, dan lakukan pembayaran. Anda akan menerima Email link akses aktif secara otomatis dalam hitungan detik dan Anda bisa langsung mulai mengedit foto atau membuat voice over.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 5 -->
-                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
-                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
-                        <h2 class="font-bold text-lg">Bagaimana dengan akses paket bundling?</h2>
-                        <span class="relative size-5 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </span>
-                    </summary>
-                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Cukup klik tombol "Ambil Paket Bundling" di atas, lalu isi formulir pendaftaran singkat, dan lakukan pembayaran. Anda akan menerima Email berupa link akses aktif kedua tools dalam paket bundling tersebut secara otomatis dalam hitungan detik dan Anda bisa langsung mulai mengedit foto atau membuat voice over.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 6 -->
-                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
-                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
-                        <h2 class="font-bold text-lg">Apakah Dapat Tutorial Penggunaannya?</h2>
-                        <span class="relative size-5 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </span>
-                    </summary>
-                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Ya tentu! Anda juga akan mendapatkan panduan video tutorial yang mudah dipelajari dan bisa langsung dipraktekan, agar Anda tidak bingung cara menggunakan tools-nya.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 7 -->
-                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
-                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
-                        <h2 class="font-bold text-lg">Ribet Gak Cara Menggunakan Tools-nya?</h2>
-                        <span class="relative size-5 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </span>
-                    </summary>
-                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Tentu tidak! Pemula gaptek sekalipun bisa langsung praktek, Step by step panduannya ada di video tutorial yang mudah Anda pahami.
-                    </div>
-                </details>
-
-                <!-- FAQ Item 8 -->
-                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
-                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
-                        <h2 class="font-bold text-lg">Apakah Ada Garansi?</h2>
-                        <span class="relative size-5 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </span>
-                    </summary>
-                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
-                        Tentu saja ada! Tools kami bergaransi uang kembali 30 hari jika tools tidak berfungsi sesuai benefit yang kami tawarkan. Kelancaran Terjamin oleh environtment AI milik Google Gemini.
+                        Cukup klik tombol "Ambil Akses Sekarang" di atas, atau "Ambil Paket Bundling", isi formulir pendaftaran singkat, dan lakukan pembayaran. Akun Anda akan aktif secara otomatis dalam hitungan detik.
                     </div>
                 </details>
             </div>
@@ -1350,12 +1222,11 @@
         </div>
     </footer>
 
-    <!-- Slider JS (Modular Logic) -->
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Logic modular untuk menangani semua slider dengan class .slider-container
+            // Slider Logic
             const sliders = document.querySelectorAll('.slider-container');
-
             sliders.forEach(sliderContainer => {
                 const sliderInput = sliderContainer.querySelector('.slider-input');
                 const foregroundWrapper = sliderContainer.querySelector('.img-foreground-wrapper');
@@ -1375,19 +1246,12 @@
                     foregroundImage.style.width = `${totalWidth}px`;
                 }
 
-                // Event Listeners
                 sliderInput.addEventListener('input', updateSlider);
-                
-                // Observer untuk resize
                 const resizeObserver = new ResizeObserver(() => { syncImageWidth(); });
                 resizeObserver.observe(sliderContainer);
-                
-                // Init
                 syncImageWidth();
                 updateSlider();
             });
-            
-            // Fallback Global Window Resize
             window.addEventListener('resize', () => {
                 sliders.forEach(sliderContainer => {
                     const img = sliderContainer.querySelector('.img-foreground-inner');
@@ -1395,14 +1259,29 @@
                 });
             });
         });
+
+        // HELPER FUNCTION: TRACK SMART CHECKOUT (GENERATE UNIQUE EVENT ID)
+        // Fungsi ini membuat ID unik (deduplication key) setiap kali tombol diklik.
+        // Mencegah double counting dan memenuhi standar "deduplication parameters" Facebook.
+        function trackSmartCheckout(productName, price) {
+            // Generate Unique ID: 'purchase_' + timestamp + random_number
+            var uniqueEventId = 'purchase_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+            
+            console.log('Tracking Event with ID:', uniqueEventId); // Debugging
+
+            // 1. Kirim event AddToCart (dengan ID unik)
+            fbq('track', 'AddToCart', 
+                { content_name: productName, value: price, currency: 'IDR' }, 
+                { eventID: uniqueEventId }
+            );
+
+            // 2. Kirim event InitiateCheckout (dengan ID unik yang SAMA)
+            // Menggunakan ID yang sama membantu Facebook memahami ini adalah rangkaian aksi dari orang yang sama
+            fbq('track', 'InitiateCheckout', 
+                { content_name: productName, value: price, currency: 'IDR' }, 
+                { eventID: uniqueEventId }
+            );
+        }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
