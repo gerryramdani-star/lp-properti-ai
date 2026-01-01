@@ -1275,17 +1275,21 @@
             console.log('Tracking Event with ID:', uniqueEventId); // Debugging
 
             // 1. Kirim event AddToCart (dengan ID unik)
+            // Ini menandakan user sudah "berminat" dan klik tombol beli
             fbq('track', 'AddToCart', 
                 { content_name: productName, value: price, currency: 'IDR' }, 
                 { eventID: uniqueEventId }
             );
 
-            // 2. Kirim event InitiateCheckout (dengan ID unik yang SAMA)
-            // Menggunakan ID yang sama membantu Facebook memahami ini adalah rangkaian aksi dari orang yang sama
-            fbq('track', 'InitiateCheckout', 
+            // [DINONAKTIFKAN] 2. Kirim event InitiateCheckout
+            // Bagian ini dihapus karena event IC akan dipicu di halaman tujuan (Domain Lain)
+            // agar tidak terjadi double counting.
+            
+            /* fbq('track', 'InitiateCheckout', 
                 { content_name: productName, value: price, currency: 'IDR' }, 
                 { eventID: uniqueEventId }
-            );
+            ); 
+            */
         }
     </script>
 </body>
