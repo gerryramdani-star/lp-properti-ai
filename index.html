@@ -744,11 +744,6 @@
                 
                 <div class="relative bg-[#0F172A] rounded-[2.5rem] p-8 md:p-14 border border-white/10 shadow-2xl">
                     
-                    <!-- NEW: Add To Wishlist Button -->
-                    <button onclick="fbq('track', 'AddToWishlist', {content_name: 'PropertiAI Single', value: 99000, currency: 'IDR'}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 text-gray-600 hover:text-red-500 transition duration-300 z-20 group" title="Simpan ke Wishlist">
-                        <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
-                    </button>
-
                     <div class="absolute top-0 right-0 bg-gradient-to-r from-red-600 to-red-500 text-white text-[10px] md:text-xs font-bold px-4 py-2 md:px-6 md:py-3 rounded-bl-2xl rounded-tr-[2.3rem] uppercase tracking-wider shadow-lg">
                         Limited Offer
                     </div>
@@ -875,11 +870,6 @@
             <!-- Bundle Card Container -->
             <div class="relative bg-slate-800/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden group hover:border-white/20 transition duration-500">
                 
-                <!-- NEW: Add To Wishlist Button (Bundle) -->
-                <button onclick="var eid = 'wl_' + new Date().getTime(); fbq('track', 'AddToWishlist', {content_name: 'Paket Bundling', value: 139000, currency: 'IDR'}, {eventID: eid}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 ..." title="Simpan ke Wishlist">
-                    <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
-                </button>
-
                 <!-- Glowing Animated Border -->
                 <div class="absolute -inset-[1px] bg-gradient-to-r from-yellow-500 via-blue-500 to-cyan-500 rounded-[2.5rem] opacity-20 group-hover:opacity-50 transition duration-1000 blur-md"></div>
                 
@@ -1067,12 +1057,6 @@
             <!-- Card Premium Genie -->
             <div class="relative max-w-lg mx-auto transform hover:scale-105 transition duration-500">
                 
-                <!-- NEW: Add To Wishlist Button (Genie) -->
-                <!-- Menambahkan EventID juga ke wishlist -->
-                <button onclick="var eid = 'wl_' + new Date().getTime(); fbq('track', 'AddToWishlist', {content_name: 'Genie Voice Studio Single', value: 99000, currency: 'IDR'}, {eventID: eid}); this.classList.toggle('text-red-500');" class="absolute top-8 left-8 text-gray-600 hover:text-red-500 transition duration-300 z-20 group" title="Simpan ke Wishlist">
-                    <i class="fas fa-heart text-2xl group-hover:scale-110 transition-transform"></i>
-                </button>
-
                 <!-- Border Gradient Blue/Cyan/Purple -->
                 <div class="absolute -inset-[2px] bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-600 rounded-[2.6rem] blur opacity-75"></div>
                 
@@ -1159,6 +1143,23 @@
                     </summary>
                     <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
                         Betul! Kami menggunakan model "Lifetime Deal" untuk promo peluncuran ini. Anda hanya perlu membayar Rp 99.000 satu kali di awal (untuk promo paket single), Rp 139.000 (untuk promo paket bundling) satu kali di awal dan akun Anda akan aktif selamanya tanpa biaya bulanan atau tahunan tersembunyi.
+                    </div>
+                </details>
+
+                <details class="group glass-card p-1 rounded-2xl border-yellow-500/10 [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-xl p-4 text-white hover:bg-white/5 transition">
+                        <h2 class="font-bold text-lg">Bagaimana jika akses tools tidak berfungsi?</h2>
+                        <span class="relative size-5 shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 text-gray-400 leading-relaxed text-sm">
+                        Tenang! Kami bisa memberikan Anda garansi akses tools tetap normal. Dengan bergabung di grup Telegram Anda akan mendapat support jika terjadi kendala teknis pada aplikasi.
                     </div>
                 </details>
 
