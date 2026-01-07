@@ -1187,8 +1187,510 @@
             */
         }
     </script>
+    <!-- Mulai Kode Widget Asisten Virtual -->
+<div id="vb-chat-widget-container"></div>
+<script type="module">
+// --- Konfigurasi Widget ---
+// Data ini disematkan dari generator
+const WIDGET_CONFIG = {
+    // --- PERUBAHAN: Nama variabel diubah & komentar dihapus ---
+    VD: "QUl6YVN5QTRIcEE2VHpEYU5pMlU1ZlN6a3RHOWZLWTYxSXRJdGY4", 
+    // --- AKHIR PERUBAHAN ---
+    PDF_CONTEXT: `Aktivasi Mode: Admin Virtual Ramah Properti AI  Kamu sekarang adalah [Andara], admin virtual utama untuk brand kita yang menjual produk digital Properti AI & Genie Voice Studio. **1. Peran & Platform:** Kamu bertugas menjawab semua pertanyaan yang masuk dengan ramah. **2. Tujuan Utama:** Membantu audiens (yang kita panggil 'kak') dengan ramah dan cepat. Tujuanmu adalah membuat mereka merasa terbantu, mengerti produk kita, dan akhirnya tertarik untuk membeli, tanpa terkesan memaksa. **3. Persona & Gaya Bahasa (Vibes & Language Style):** - **Vibe:** Ramah, santai, super helpful, dan positif. Kamu adalah teman sefrekuensi yang kebetulan jago banget soal produk kita. - **Panggilan ke Audiens:** Panggil mereka "kak". - **Gaya Bahasa Santai:** - Gunakan bahasa yang kasual dan tidak kaku. - Gunakan emoji untuk menambah ekspresi, tapi jangan berlebihan. Emoji andalanmu:   ✨ ,   🤩 ,   🔥 ,   🚀 ,   😉 ,   🙏 ,   🤫 . - Kalimat pendek dan to-the-point lebih baik. **4. Aturan Wajib & Batasan (The Hard Rules):** - **DILARANG KERAS:** Memberikan nasihat keuangan atau medis. Jika ada yang bertanya soal "apakah ini investasi bagus?", jawab dengan "Produk kami dibuat hanya untuk membantu Kamu para Agen dan Developer Properti bisa punya stok konten profesional ya kak, bukan untuk investasi finansial   🙏 ". - **DILARANG KERAS:** Menggunakan bahasa kasar, menyindir, atau menjelek-jelekkan brand lain. Selalu positif. - **ESKALASI:** Jika ada keluhan serius (misal: "produknya jelek banget", "saya ketipu!") atau pertanyaan super teknis yang tidak ada di database, JANGAN berdebat. Jawab dengan template ini: "Waduh, maaf banget ya kak atas kendalanya. Biar langsung ditangani tim expert, boleh tolong email ke [gerry.ramdani@gmail.com] ya? Nanti dibantu sampai tuntas!   🙏 " - **PENJELASAN SEDERHANA:** Karena audiens kita masih awam, jelaskan istilah sulit (seperti "API Key") dengan analogi yang gampang. Contoh: "API Key adalah "kunci" pribadi Kamu untuk mengakses layanan Google Ai biar tools kamu jadi pintar" **5. Sumber Pengetahuan (Knowledge Base):** - Pengetahuan utamamu **HANYA** berasal dari daftar produk dan daftar F.A.Q di bawah ini. Jangan mengarang fitur, harga, dan Jawaban. - Kamu boleh menggunakan pengetahuan umum untuk membuat analogi atau memahami konteks pertanyaan. --- [DAFTAR PRODUK] --- * **Properti AI "tools image generator untuk properti"** * Harga launching: Rp 99.000, Harga normal: Rp 149.000, * **Paket Bundling dengan Genie Voice Studio "tools voice maker untuk membuat pengisi suara konten properti" Harga Bundling: Rp 139.000, Harga normal: Rp 198.000** * Harga tersebut sudah termasuk hak akses langsung ke tools Properti AI & Genie Voice Studio yang berlaku selamanya, akses video panduan penggunaan tools, dapet Bonus E-book PDF dan grup diskusi teknis di Telegram. Untuk saat ini tidak ada versi Trial. * Deskripsi: Properti AI adalah sebuah tools (Generator) untuk membuat foto listing properti lebih menarik dan profesional. Kamu bisa mempercantik tampilan foto rumah biasa aja, foto ruangan kosong properti kamu, menjadi lebih menarik dan lebih menjual dengan tampilan profesional. * Target: Agen Properti, Developer Properti, bisnis owner, freelancer atau siapa saja yang terbantu dengan fitur canggih Pengolah gambar dan suara. --- [AKHIR DARI DAFTAR PRODUK] --- **6. Contoh Interaksi (How You Should Respond):** * **Contoh 1 (Pertanyaan Produk):** * *Komentar User:* "spill demo toolsnya dong kak" * *Jawaban Idealmu:* "Siap kak!   ✨   Web ini sudah menampilkan hasil generate dari Tools Properti AI dan Genie voice studio. Kamu bisa cek hasil foto dengan menggeser bagian before-after, dan untuk hasil contoh suara kamu bisa cek suaranya dari video short yang ada di web ini   😉 " * **Contoh 2 (Pertanyaan Konsep):** * *Chat Customer:* "Tools apa ini? ga ngerti" * *Jawaban Idealmu:* "Santai kak, sini aku jelasin. Properti AI itu ibaratnya 'Desainer' atau 'Konten Kreator' yang berbasis kecerdasan AI yang siap bantu kamu bikin tampilan foto jadi lebih profesional. Misalnya kamu mau mempercantik foto rumah atau interior rumah untuk listing tinggal ketik perintah atau pilih template yang sudah disediakan. Makin detail perintah dan info-nya, makin akurat dan bagus hasi fotonya!   🔥   Gituuu. Ada lagi yg mau ditanyain?" * **Contoh 3 (Pertanyaan Harga):** * *Chat Customer:* "harga tools Properti AI brp?" * *Jawaban Idealmu:* "Untuk 'Promo harga Launching' harganya 99rb ya kak. Tapi Jika kamu beli paket bundling 139rb malah lebih worth it lagi, Karena selain kamu dapet tools canggih yang bisa bikin foto profesional untuk listing kamu juga bisa bikin voice over dengan suara natural khas orang Indonesia untuk konten kamu   🚀 "
+--- [DOKUMEN F.A.Q] —  T: Apakah benar-benar Unlimited? Apa maksudnya?  J: Benar! Berbeda dengan aplikasi lain yang memberi Anda jatah "10 kredit/hari", di Properti AI tidak ada batasan dari aplikasi. Anda bisa generate foto sebanyak yang Anda mau.   Catatan Teknis:   Batasan hanya datang dari Google (penyedia AI) yang memberikan kuota gratis sangat besar (sekitar 1.500 request/hari untuk akun gratis). Bagi penggunaan agen properti perorangan, jumlah ini praktis terasa "unlimited".  T: Apakah ada biaya langganan bulanan?  J: TIDAK ADA. Selama periode Promo Launching Anda hanya cukup memiliki   tools   ini sekali saja. Tidak ada biaya perpanjangan, biaya sewa server, atau biaya tersembunyi lainnya.  T: Apakah hasil fotonya ada watermark? J: Tidak ada. Hasil foto yang Anda download bersih (clean), resolusi tinggi (HD), dan siap diposting di portal properti atau media sosial Anda.  T: Saya gaptek, apakah cara pakainya susah? A: Sangat mudah. Tools ini dirancang semudah mungkin:  1.   Klik Upload Foto.  2.   Klik Tombol Gaya (misal: "Minimalis").  3.   Tunggu 5 detik, foto jadi. Tidak perlu instalasi software berat atau koding.  T: Apakah bisa dipakai di HP (Android/iPhone)? J: Bisa banget! Karena   tools   ini berbasis file HTML yang berjalan di browser, Anda bisa membukanya di Google Chrome, Safari, atau browser bawaan HP apa saja. Laptop/PC juga tentu bisa.  T: Apakah butuh laptop spek tinggi? J: Tidak perlu. Karena proses "berpikir" (rendering) dilakukan oleh server Google, laptop standar atau HP biasa pun bisa menjalankannya dengan cepat.  T: Apakah foto listing saya aman? A: Sangat aman. Foto yang Anda upload diproses langsung dari browser Anda ke server Google (untuk diedit AI) dan langsung dikembalikan ke Anda. Kami (pembuat tools) tidak melihat, menyimpan, atau memiliki akses ke foto-foto properti Anda. Privasi klien Anda terjaga 100%.  T: Apakah generator ini Lifetime?   J:   Ya, untuk kebijakan saat ini selama Kamu membeli di periode Promo Harga Launching, cukup beli 1x dan bisa pakai selamanya.  T: Tools dikirim lewat mana?   J:   Tools akan dikirim lewat Email, jadi pastikan Kamu mengisi Email dengan benar ya!  T: Apakah ada biaya tambahan lain untuk beli API token?   J:   Tidak ada biaya tambahan, cukup bayar 1x seharga 99 ribu (paket single) atau 1x seharga 139 ribu (paket bundling) dan kamu tidak perlu membeli API token seperti Tools lainnya.
+T: Ada garansi?   J:   Untuk garansi, 30 hari jaminan akses dan fungsional tools berjalan normal. Jika Kamu terkendala masalah teknis, maka kami dengan senang hati SIAP membantu sampai tuntas!  T: Apa bedanya VIRMIN dan produk lain?   J:   Properti AI adalah tools image generator yang didukung oleh environment (otak) menggunakan AI bawaan google, kamu cukup beli 1x aja dapet akses lifetime (selama periode launching), dan juga untuk tampilannya sudah mobile friendly (nyaman digunakan dari HP).  T: Apakah saya bisa Refund?   J:   Maaf banget untuk Refund tidak bisa, karena setelah Kamu dapet akses maka kamu berhak pakai Properti AI & Genie Voice (bundling) ini selamanya.  T: Apakah saya bisa lihat DEMO hasil tools nya?   J:   Tentu bisa, web ini sudah menyertakan contoh hasil gambar yang digenerate oleh tools Properti AI. Untuk contoh suara dari Genie Voice Studio Kamu bisa cek video short youtube yang sudah kami tampilkan.  T: Bagaimana cara membeli produk? J:   Cara membeli sangat mudah: Kamu cukup  isi data Nama, Nomor Whatsapp, dan Email Kamu. Klik tombol warna kuning "Ambil Akses Sekarang" atau Tombol “Ambil Paket Bundling”. Lakukan pembayaran melalui [metode pembayaran: QRIS, OVO, DANA, GOPAY, atau Virtual Account Bank yang tersedia]. Kamu cek inbox email kamu untuk menerima link akses setelah pembayaran diterima. Jangan lupa Join grup Telegram untuk info & kendala teknis, linknya akan disertakan juga di email.  T: Apakah produknya langsung dikirim? J:   Ya, untuk produk digital ini, link download  akan otomatis dikirim ke email Kamu setelah pembayaran terkonfirmasi. Pastikan  Kamu input alamat email dengan Benar ya…  T: Saya tidak menerima email, bagaimana? J:   Mohon cek folder SPAM di email  Kamu terlebih dahulu. Jika masih belum ada, silakan hubungi kami di grup Telegram  dengan menyertakan bukti pembayaran.  T: Apa itu Genie Voice Studio Pro?   J:   Genie Voice Studio Pro adalah   software   berbasis web (cloud-based) yang menggunakan kecerdasan buatan (AI) tercanggih dari Google Gemini untuk mengubah teks menjadi suara (voice over), menganalisis gambar menjadi narasi audio, membuat naskah iklan otomatis, hingga mengubah rekaman suara menjadi teks (transkripsi).  T: Apakah saya perlu menginstal aplikasi di komputer?   J:   Tidak perlu. Genie Voice Studio Pro adalah alat berbasis web. Anda bisa mengaksesnya langsung melalui browser (Chrome, Edge, Firefox, Safari) di laptop, PC, tablet, maupun smartphone tanpa perlu instalasi yang memberatkan perangkat.  T: Apakah ini menggunakan sistem langganan bulanan? J:   Tidak! Kami menawarkan akses   Lifetime (Sekali Bayar) selama periode Promo Harga Launching . Anda cukup membayar satu kali di awal dan bisa menggunakan alat ini selamanya tanpa biaya bulanan tersembunyi.  T: Berapa banyak karakter suara yang tersedia?   A:   Genie menyediakan 30 variasi suara AI yang memilik ciri khas natural orang Indonesia, baik Laki-laki maupun Perempuan. Nama-nama karakter seperti Achernar, Fenrir, Kore, dan lainnya menawarkan   tone   yang berbeda-beda.
+T: Apakah suaranya terdengar seperti robot?   J:   Tidak. Teknologi kami menggunakan   Neural Text-to-Speech   terbaru yang menghasilkan intonasi, jeda, dan emosi yang sangat mirip dengan manusia. Anda bahkan bisa mengatur gaya bicara (Ceria, Sedih, Berbisik, Profesional, dll).  T: Bisakah saya mengatur kecepatan dan nada suara?   J:   Tentu saja! Anda memiliki kendali penuh atas:  ●   Speed:   Kecepatan bicara.  ●   Pitch:   Tinggi rendahnya nada.  ●   Volume:   Keras lembutnya suara.  ●   Style:   Emosi/gaya bicara.  T: Apa format file audio yang dihasilkan?   J:   Audio akan di-generate dalam format   .WAV   kualitas tinggi ( lossless ), yang merupakan standar industri untuk editing video dan audio profesional.  T: Apa maksud fitur "Gambar ke Suara"?   J:   Ini adalah fitur unik Genie. Anda cukup mengunggah foto produk atau pemandangan, lalu AI kami akan "melihat" gambar tersebut, membuatkan naskah yang relevan secara otomatis, dan langsung membacakannya untuk Anda. Sangat cocok untuk konten kreator yang malas mengetik!  T: Bagaimana cara kerja fitur Transkripsi?   J:   Anda tinggal mengunggah file rekaman suara (misalnya rekaman rapat atau wawancara). Genie akan mendengarkan audio tersebut dan mengubahnya menjadi teks tertulis dengan akurasi tinggi dalam hitungan detik.  T: Apakah Genie bisa membuatkan naskah iklan untuk saya?   J:   Ya! Dengan fitur   AI Copywriting , Anda cukup memasukkan deskripsi singkat produk Anda, dan Genie akan menuliskan naskah iklan yang persuasif (hypnotic writing) yang siap untuk dikonversi menjadi suara.  T: Apakah bisa digunakan di HP/Android/iPhone?   J:   Bisa banget! Tampilan Genie Voice Studio Pro sudah didesain responsif dan modern (seperti aplikasi native) sehingga sangat nyaman digunakan di layar sentuh HP.  T: Apakah ada batasan karakter per konversi?   J:   Sistem kami memproses teks per paragraf/bagian untuk memastikan kualitas intonasi terbaik. Namun, Anda bisa menambahkan bagian (chunk) sebanyak yang Anda mau dan menggabungkannya atau mengunduhnya sekaligus dalam format .ZIP.  T: Bolehkah hasil suaranya digunakan untuk YouTube/Iklan (Komersial)?   A:   Ya, Anda memiliki hak komersial penuh atas file audio yang Anda hasilkan menggunakan Genie Voice Studio Pro. Bebas digunakan untuk YouTube, TikTok Ads, Facebook Ads, Podcast, dan keperluan klien.  T: Bagaimana jika saya mengalami kendala saat login?   J:   Pastikan username dan password yang Anda masukkan benar. Jika Anda lupa, silakan hubungi tim support kami.  T: Apakah ada tutorial penggunaannya?   J:   Ya, di dalam dashboard aplikasi terdapat tombol   "Lihat Dokumentasi"   yang berisi panduan lengkap cara menggunakan setiap fitur Genie Voice Studio Pro.  --- [AKHIR DOKUMEN F.A.Q] —  Oke, briefing selesai. Mulai sekarang, kamu adalah [Andara]. Ingat semua aturan dan persona di atas.
+`, 
+    WIDGET_NAME: "Admin Andara",
+    THEME_COLOR: "#15b718",
+    WELCOME_MSG: "Halo! saya Asisten Virtual, jika ada pertanyaan tentang produk ini, tanya aku aja ya...",
+    LAUNCHER_TEXT: "Tanya CS" // Tambahkan teks launcher
+};
+// -------------------------
+
+// --- PERUBAHAN: Dekode key dari var baru & hapus komentar ---
+const DECODED_API_KEY = atob(WIDGET_CONFIG.VD);
+// --- PERBAIKAN: Typo 'generativelace' diperbaiki menjadi 'generativelanguage' ---
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${DECODED_API_KEY}`;
+// --- AKHIR PERBAIKAN ---
+
+
+// --- Fungsi Helper ---
+async function fetchWithRetry(fetchFn, maxRetries = 5, baseDelay = 1000) {
+    let attempt = 0;
+    while (attempt < maxRetries) {
+        try {
+            const response = await fetchFn();
+            if (response.status === 429 || response.status >= 500) {
+                // Jangan log retry 429/5xx sebagai error di console
+                throw new Error(`Server error: ${response.status}`);
+            }
+            return response;
+        } catch (error) {
+            attempt++;
+            if (attempt >= maxRetries) {
+                // Log error akhir jika semua retry gagal
+                console.error("Fetch failed after max retries:", error.message);
+                throw error;
+            }
+            const delay = baseDelay * Math.pow(2, attempt - 1) + Math.random() * 1000;
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+}
+
+async function callGeminiAPI(userQuestion) {
+    const fullPrompt = `
+Anda adalah asisten virtual. Berdasarkan HANYA pada konteks berikut, jawab pertanyaan pengguna.
+Jika jawaban tidak dapat ditemukan dalam konteks, katakan dengan sopan bahwa Anda tidak dapat menemukan informasi tersebut dalam dokumen.
+Jangan gunakan pengetahuan di luar konteks yang diberikan.
+
+--- KONTEKS DARI PDF ---
+${WIDGET_CONFIG.PDF_CONTEXT}
+--- AKHIR KONTEKS ---
+
+PERTANYAAN PENGGUNA:
+"${userQuestion}"
+
+JAWABAN ANDA:
+    `;
+
+    const payload = {
+        contents: [{
+            parts: [{ text: fullPrompt }]
+        }],
+        generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 1024
+        }
+    };
+
+    try {
+        const response = await fetchWithRetry(() => fetch(GEMINI_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }));
+
+        if (!response.ok) {
+            const errorBody = await response.json();
+            console.error("API Error:", errorBody);
+            // Hindari penggunaan alert()
+            return `Maaf, terjadi kesalahan saat menghubungi server AI. (${response.status})`;
+        }
+
+        const result = await response.json();
+        
+        if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
+            return result.candidates[0].content.parts[0].text;
+        } else {
+            // Tangani jika tidak ada kandidat atau struktur tidak sesuai
+            if (result.promptFeedback) {
+                console.warn("API call blocked or failed:", result.promptFeedback);
+                return "Maaf, permintaan Anda tidak dapat diproses saat ini karena alasan keamanan atau filter konten.";
+            }
+            console.warn("API response structure unexpected:", result);
+            return "Maaf, saya tidak dapat memproses jawaban saat ini. Silakan coba lagi.";
+        }
+    } catch (error) {
+        // Error dari fetchWithRetry (setelah semua percobaan gagal)
+        console.error("Fetch Error:", error);
+        return `Maaf, terjadi masalah koneksi. ${error.message}`;
+    }
+}
+
+
+// --- Logika Pembuatan UI Widget ---
+
+function createWidgetUI() {
+    const container = document.getElementById('vb-chat-widget-container');
+    if (!container) {
+        console.error("Container widget tidak ditemukan.");
+        return;
+    }
+
+    // Gunakan Shadow DOM untuk isolasi style
+    const shadowRoot = container.attachShadow({ mode: 'open' });
+
+    shadowRoot.innerHTML = `
+        <style>
+            /* Reset style minimal untuk :host */
+            :host {
+                all: initial; /* Reset semua style warisan */
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            /* Box-sizing untuk semua elemen di dalam Shadow DOM */
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Style untuk tombol launcher */
+            .vb-chat-launcher {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                height: 50px; /* Tinggi yang lebih sesuai */
+                padding: 0 20px; /* Padding horizontal */
+                background-color: ${WIDGET_CONFIG.THEME_COLOR};
+                color: white;
+                border-radius: 25px; /* Bentuk pil */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border: none;
+                transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, width 0.2s ease, padding 0.2s ease, border-radius 0.2s ease;
+                z-index: 9998;
+                font-weight: 600;
+                font-size: 0.95rem;
+                white-space: nowrap; /* Teks tidak patah */
+                overflow: hidden; /* Hindari konten keluar saat transisi */
+            }
+            .vb-chat-launcher:hover {
+                transform: scale(1.02);
+                box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            }
+
+            .vb-chat-launcher-icon {
+                width: 20px;
+                height: 20px;
+                transition: display 0.1s ease;
+            }
+
+            /* Ikon Chat (saat tertutup) */
+            .vb-chat-launcher .chat-icon-visible {
+                display: block;
+                margin-right: 8px;
+            }
+            /* Ikon Close (saat terbuka) */
+            .vb-chat-launcher .close-icon-visible {
+                display: none;
+                width: 20px;
+                height: 20px;
+            }
+            /* Teks (saat tertutup) */
+            .vb-chat-launcher .launcher-text {
+                display: inline-block;
+            }
+
+            /* State Terbuka untuk Launcher */
+            .vb-chat-launcher.open {
+                width: 50px;  /* Mengecil jadi lingkaran */
+                height: 50px;
+                padding: 0;   /* Hapus padding */
+                border-radius: 50%; /* Jadi lingkaran */
+                justify-content: center;
+            }
+            .vb-chat-launcher.open .chat-icon-visible {
+                display: none;
+            }
+            .vb-chat-launcher.open .close-icon-visible {
+                display: block;
+            }
+            .vb-chat-launcher.open .launcher-text {
+                display: none;
+            }
+            
+            /* Style untuk jendela chat */
+            .vb-chat-window {
+                position: fixed;
+                bottom: 80px; /* Disesuaikan agar di atas launcher baru (50px + 20px margin + 10px) */
+                right: 20px;
+                width: 350px;
+                height: 500px;
+                max-height: calc(100vh - 100px); /* Disesuaikan */
+                background-color: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                transform: scale(0.95) translateY(10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: transform 0.2s ease, opacity 0.2s ease, visibility 0.2s;
+                z-index: 9999;
+                transform-origin: bottom right;
+            }
+            /* Responsif untuk layar kecil */
+            @media (max-width: 400px) {
+                .vb-chat-window {
+                    width: calc(100vw - 30px);
+                    height: calc(100vh - 90px); /* Disesuaikan */
+                    bottom: 80px;
+                    right: 15px;
+                }
+                .vb-chat-launcher {
+                    bottom: 15px;
+                    right: 15px;
+                }
+            }
+            .vb-chat-window.open {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            /* Header */
+            .vb-chat-header {
+                background-color: ${WIDGET_CONFIG.THEME_COLOR};
+                color: white;
+                padding: 16px;
+                border-radius: 12px 12px 0 0;
+                display: flex; 
+                align-items: center; 
+                flex-shrink: 0; /* Pastikan header tidak mengecil */
+            }
+            .vb-online-indicator {
+                width: 10px;
+                height: 10px;
+                background-color: #39ff14; /* Hijau neon */
+                border-radius: 50%;
+                margin-right: 10px;
+                animation: vb-blink 1.2s infinite alternate;
+                box-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14;
+                flex-shrink: 0; /* <-- Tambahkan agar tidak tergencet */
+            }
+            @keyframes vb-blink {
+                from { opacity: 0.3; }
+                to { opacity: 1; }
+            }
+            .vb-chat-header h3 {
+                margin: 0;
+                font-size: 1.1rem;
+                font-weight: bold;
+                line-height: 1.2; /* <-- Tambahkan line-height */
+            }
+            
+            /* --- CSS BARU --- */
+            .vb-header-text {
+                display: flex;
+                flex-direction: column;
+                line-height: 1.2;
+            }
+            .vb-status-text {
+                font-size: 0.8rem;
+                font-weight: 400;
+                color: white;
+                opacity: 0.85;
+                margin: 0; /* Hapus margin default */
+            }
+            /* --- AKHIR CSS BARU --- */
+
+            /* Badan Chat */
+            .vb-chat-body {
+                flex: 1; /* Ini kunci agar bisa scroll */
+                padding: 12px;
+                overflow-y: auto;
+                background-color: #f9f9f9;
+                display: flex;
+                flex-direction: column;
+            }
+            .vb-message {
+                max-width: 80%;
+                padding: 10px 14px;
+                border-radius: 18px;
+                margin-bottom: 10px;
+                font-size: 0.9rem;
+                line-height: 1.4;
+                word-wrap: break-word; /* <-- Ganti ke properti yang didukung luas */
+                overflow-wrap: break-word; /* <-- Properti modern */
+            }
+            .vb-message.user {
+                background-color: ${WIDGET_CONFIG.THEME_COLOR};
+                color: white;
+                align-self: flex-end;
+                border-bottom-right-radius: 4px;
+            }
+            .vb-message.bot {
+                background-color: #e5e5e5;
+                color: #333;
+                align-self: flex-start;
+                border-bottom-left-radius: 4px;
+            }
+            .vb-message.bot.typing {
+                color: #777;
+                font-style: italic;
+            }
+            
+            /* Footer/Input */
+            .vb-chat-footer {
+                padding: 12px;
+                border-top: 1px solid #e0e0e0;
+                background-color: #ffffff;
+                flex-shrink: 0; /* Pastikan footer tidak mengecil */
+            }
+            .vb-chat-footer form {
+                display: flex;
+                gap: 8px;
+                align-items: center; /* Vertically center input and button */
+            }
+            .vb-chat-input {
+                flex: 1;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                outline: none;
+                transition: border-color 0.2s;
+                font-family: inherit; /* Warisi font family */
+            }
+            .vb-chat-input:focus {
+                border-color: ${WIDGET_CONFIG.THEME_COLOR};
+            }
+            .vb-chat-send-btn {
+                background-color: ${WIDGET_CONFIG.THEME_COLOR};
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 42px;
+                height: 42px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.2s, opacity 0.2s;
+                flex-shrink: 0; /* Pastikan tombol tidak mengecil */
+            }
+            .vb-chat-send-btn:hover {
+                opacity: 0.9;
+            }
+            .vb-chat-send-btn:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+            .vb-chat-send-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+        </style>
+        
+        <!-- HTML untuk Widget -->
+        <div class="vb-chat-window" id="vb-chat-window">
+            <!-- --- PERUBAHAN HTML HEADER --- -->
+            <div class="vb-chat-header">
+                <span class="vb-online-indicator"></span>
+                <div class="vb-header-text">
+                    <h3>${WIDGET_CONFIG.WIDGET_NAME}</h3>
+                    <p class="vb-status-text">Online | crafted by VIRMIN</p>
+                </div>
+            </div>
+            <!-- --- AKHIR PERUBAHAN HTML HEADER --- -->
+            <div class="vb-chat-body" id="vb-chat-body">
+                <!-- Pesan selamat datang -->
+                <div class="vb-message bot" id="vb-welcome-msg">
+                    ${WIDGET_CONFIG.WELCOME_MSG}
+                </div>
+            </div>
+            <div class="vb-chat-footer">
+                <form id="vb-chat-form">
+                    <input type="text" id="vb-chat-input" class="vb-chat-input" placeholder="Ketik pesan Anda..." autocomplete="off">
+                    <button type="submit" id="vb-chat-send-btn" class="vb-chat-send-btn" aria-label="Kirim">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <button class="vb-chat-launcher" id="vb-chat-launcher" aria-label="Buka Chat">
+            <!-- Ikon Chat (terlihat saat widget tertutup) -->
+            <img class="vb-chat-launcher-icon chat-icon-visible" src="https://raw.githubusercontent.com/gerryramdani-star/virmin-chatbot/refs/heads/main/asset/bubble%20chat.png" alt="Chat Icon" />
+            
+            <!-- Ikon Tutup (terlihat saat widget terbuka) -->
+            <svg class="vb-chat-launcher-icon close-icon-visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
+            </svg>
+            
+            <span class="launcher-text">${WIDGET_CONFIG.LAUNCHER_TEXT}</span>
+        </button>
+    `;
+
+    // --- Menambahkan Logika Event Listener ke Elemen Shadow DOM ---
+    const launcher = shadowRoot.getElementById('vb-chat-launcher');
+    const chatWindow = shadowRoot.getElementById('vb-chat-window');
+    const chatBody = shadowRoot.getElementById('vb-chat-body');
+    const chatForm = shadowRoot.getElementById('vb-chat-form');
+    const chatInput = shadowRoot.getElementById('vb-chat-input');
+    const sendBtn = shadowRoot.getElementById('vb-chat-send-btn');
+    const welcomeMsgEl_shadow = shadowRoot.getElementById('vb-welcome-msg');
+
+    if (!WIDGET_CONFIG.WELCOME_MSG && welcomeMsgEl_shadow) {
+        welcomeMsgEl_shadow.style.display = 'none';
+    }
+
+    // Toggle buka/tutup chat
+    launcher.addEventListener('click', () => {
+        const isOpen = chatWindow.classList.toggle('open');
+        launcher.classList.toggle('open', isOpen);
+        
+        if (isOpen) {
+            chatInput.focus(); // Fokus ke input saat dibuka
+        }
+    });
+    
+    // Kirim pesan
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const messageText = chatInput.value.trim();
+        if (!messageText) return;
+
+        addMessage(messageText, 'user');
+        chatInput.value = '';
+        sendBtn.disabled = true;
+
+        const typingIndicator = addMessage('...', 'bot typing');
+        
+        const aiResponse = await callGeminiAPI(messageText);
+        
+        if (chatBody && typingIndicator) {
+            chatBody.removeChild(typingIndicator);
+        }
+        addMessage(aiResponse, 'bot');
+        sendBtn.disabled = false;
+        chatInput.focus();
+    });
+
+    // Aktifkan/nonaktifkan tombol kirim berdasarkan input
+    chatInput.addEventListener('input', () => {
+        sendBtn.disabled = chatInput.value.trim().length === 0;
+    });
+    // Set status awal tombol kirim
+    sendBtn.disabled = true;
+    
+    function addMessage(text, type) {
+        if (!chatBody) return null;
+        const messageEl = document.createElement('div');
+        messageEl.className = `vb-message ${type}`;
+        
+        // Bersihkan teks sebelum menambahkannya untuk mencegah XSS sederhana
+        // Untuk Markdown atau HTML, diperlukan sanitizer yang lebih kuat
+        const textNode = document.createTextNode(text);
+        messageEl.appendChild(textNode);
+        
+        chatBody.appendChild(messageEl);
+        // Scroll ke bawah
+        chatBody.scrollTop = chatBody.scrollHeight;
+        return messageEl;
+    }
+}
+
+// Inisialisasi UI Widget
+createWidgetUI();
+
+</script>
+<!-- Akhir Kode Widget Asisten Virtual -->
 </body>
 </html>
+
 
 
 
